@@ -1,0 +1,42 @@
+<resources>
+    <string name="app_name">Demokat</string>
+    <string name="iniciaSesion">Inicia Sesion</string>
+    <string name="usuario">Usuario</string>
+    <string name="contrasena">Contraseña</string>
+    <string name="jugar">Jugar</string>
+    <string name="registro">Registro</string>
+    <string name="nombre">Nombre</string>
+    <string name="apellidos">Apellidos</string>
+    <string name="repita">Repita Contraseña</string>
+    <string name="elige">Elige Tu Beatle</string>
+    <string name="rellene_nombre">Por favor, rellene su nombre</string>
+    <string name="rellene_apellido">Por favor, rellene su apellido</string>
+    <string name="rellene_usuario">Por favor, rellene su nombre de usuario</string>
+    <string name="usuario_largo">Su nombre de usuario no puede superar los 15 caracteres</string>
+    <string name="rellene_contrasena">Por favor, rellene su contraseña</string>
+    <string name="repita_contrasena">Por favor, repita su contraseña</string>
+    <string name="contrasenas_no_coinciden">Las contraseñas no coinciden</string>
+    <string name="usuario_ya_existe">El usuario ya existe, escoja otro nombre de usuario</string>
+    <string name="usuario_creado">¡Usuario creado correctamente!</string>
+    <string name="error_bd">Ha ocurrido un error con la base de datos</string>
+    <string name="usu_con_err">Usuario o contraseña incorrectos</string>
+    <string name="reading">Reading</string>
+    <string name="vocabulary">Vocabulary</string>
+    <string name="grammar">Grammar</string>
+    <string name="puntuacion">Puntuacion</string>
+    <string name="selector">Selector de Nivel</string>
+    <string name="uno">1</string>
+    <string name="dos">2</string>
+    <string name="tres">3</string>
+    <string name="cuatro">4</string>
+    <string name="cinco">5</string>
+    <string name="correcto">¡CORRECTO!</string>
+    <string name="incorrecto">¡INCORRECTO!</string>
+    <string name="solucion">Escriba aquí su solución</string>
+    <string name="herecomes">"HERE COMES "</string>
+    <string name="exclamation">!</string>
+    <string name="incorrect">Usuario o contraseña incorrectos</string>
+    <string name="bbddIncorrect">Ha ocurrido un error con la base de datos</string>
+
+
+</resources>

@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:onClick="finalizar"
+    tools:context=".controllers.InstrumentRec">
+
+    <ImageView
+        android:id="@+id/bimbo_play2"
+        android:layout_width="385dp"
+        android:layout_height="311dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="148dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dino_click" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="163dp"
+        android:layout_height="157dp"
+        android:layout_marginTop="540dp"
+        android:layout_marginEnd="36dp"
+        android:onClick="showInputDialog"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dino_click" />
+
+    <ImageView
+        android:id="@+id/play_btn2"
+        android:layout_width="165dp"
+        android:layout_height="159dp"
+        android:layout_marginTop="540dp"
+        android:layout_marginEnd="200dp"
+        android:onClick="empezar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dino_click" />
+
+    <ImageView
+        android:id="@+id/bimboMetro"
+        android:layout_width="75dp"
+        android:layout_height="67dp"
+        android:layout_marginStart="168dp"
+        android:layout_marginTop="56dp"
+        android:onClick="empezarMetro"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/dino_click" />
+
+    <TextView
+        android:id="@+id/bpm2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="192dp"
+        android:layout_marginTop="28dp"
+        android:text="60"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/menos2"
+        android:layout_width="63dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="104dp"
+        android:layout_marginTop="44dp"
+        android:onClick="restar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+    <ImageView
+        android:id="@+id/mas2"
+        android:layout_width="67dp"
+        android:layout_height="61dp"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="100dp"
+        android:onClick="sumar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_launcher_foreground" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

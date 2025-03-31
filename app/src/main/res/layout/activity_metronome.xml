@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controllers.Metronome">
+
+
+        <ImageView
+            android:id="@+id/menos3"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="11dp"
+            android:layout_marginTop="372dp"
+            android:onClick="restar1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <ImageView
+            android:id="@+id/mas4"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="372dp"
+            android:layout_marginEnd="11dp"
+            android:onClick="sumar1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <ImageView
+            android:id="@+id/bimboguitar"
+            android:layout_width="233dp"
+            android:layout_height="285dp"
+            android:layout_marginTop="68dp"
+            android:layout_marginEnd="80dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/dino_click" />
+
+        <ImageView
+            android:id="@+id/mas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="476dp"
+            android:layout_marginEnd="23dp"
+            android:onClick="sumar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <ImageView
+            android:id="@+id/menos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="23dp"
+            android:layout_marginTop="476dp"
+            android:onClick="restar"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_launcher_foreground" />
+
+        <ImageView
+            android:id="@+id/encender"
+            android:layout_width="111dp"
+            android:layout_height="118dp"
+            android:layout_marginTop="476dp"
+            android:layout_marginEnd="148dp"
+            android:onClick="empezar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/durisimo" />
+
+        <SeekBar
+            android:id="@+id/seekBar"
+            android:layout_width="376dp"
+            android:layout_height="93dp"
+            android:layout_marginTop="624dp"
+            android:layout_marginEnd="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
+
+        <TextView
+            android:id="@+id/bpm2"
+            android:layout_width="86dp"
+            android:layout_height="36dp"
+            android:layout_marginTop="392dp"
+            android:layout_marginEnd="160dp"
+            android:gravity="center"
+            android:text="60"
+            android:textSize="24sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Metrónomo"
+            android:textSize="20sp"
+            tools:layout_editor_absoluteX="153dp"
+            tools:layout_editor_absoluteY="26dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
