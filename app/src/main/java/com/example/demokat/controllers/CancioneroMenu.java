@@ -132,13 +132,14 @@ public class CancioneroMenu extends AppCompatActivity {
         list_Cancion.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-
+                cancion_titulo = titulos[position];
                 AlertDialog.Builder builder = new AlertDialog.Builder(CancioneroMenu.this);
                 builder.setTitle("¡Alerta!")
                         .setMessage("¿Deseas eliminar esta cancion?")
                         .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+                                usuarioDAO.deleteCancion(user_id, cancion_titulo);
                             Toast.makeText(CancioneroMenu.this, "Canción eliminada", Toast.LENGTH_SHORT).show();
                             crearLista2();
 

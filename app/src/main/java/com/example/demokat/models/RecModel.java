@@ -1,19 +1,20 @@
 package com.example.demokat.models;
 
+import java.sql.Timestamp;
 import java.time.LocalDate;
 
 public class RecModel {
     private String rec;
     private String titulo;
     private String instrumento;
-    private LocalDate fecha;
+    private Timestamp fecha;
     private int user_id;
 
-    public LocalDate getFecha() {
+    public Timestamp getFecha() {
         return fecha;
     }
 
-    public void setFecha(LocalDate fecha) {
+    public void setFecha(Timestamp fecha) {
         this.fecha = fecha;
     }
 
@@ -49,7 +50,7 @@ public class RecModel {
         this.user_id = user_id;
     }
 
-    public RecModel(String rec, String titulo, String instrumento,  LocalDate fecha, int user_id) {
+    public RecModel(String rec, String titulo, String instrumento,  Timestamp fecha, int user_id) {
         this.rec = rec;
         this.titulo = titulo;
         this.instrumento = instrumento;

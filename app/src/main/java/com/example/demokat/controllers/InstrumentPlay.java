@@ -31,6 +31,7 @@ public class InstrumentPlay extends AppCompatActivity {
 
    private ImageView bimboPlay;
     private boolean on;
+    private boolean loop = false;
     Thread animar;
     private MediaPlayer mediaPlayer;
     int imageInicio = R.drawable.dino_normal;
@@ -60,7 +61,10 @@ public class InstrumentPlay extends AppCompatActivity {
         bimboPlay = findViewById(R.id.bimboGuitar);
         play_btn = findViewById(R.id.play_btn2);
         loop_btn = findViewById(R.id.btn_loop);
-        uri = Uri.parse(usuarioDAO.loadURI(user_id, instrumentoSelected,title));
+        File audioFile = new File(usuarioDAO.loadURI(user_id, instrumentoSelected,title));
+        uri = Uri.fromFile(audioFile);
+
+
         tituloPlay = findViewById(R.id.titulo_tv);
         tituloPlay.setText(title);
     }
@@ -101,6 +105,12 @@ public class InstrumentPlay extends AppCompatActivity {
                 mediaPlayer = new MediaPlayer();
                 mediaPlayer.setDataSource(this,uri);
                 mediaPlayer.prepare();
+
+                if (loop){
+                    mediaPlayer.setLooping(true);
+                }
+
+
             } catch (IOException e) {
                 Toast.makeText(this,"UPSI",Toast.LENGTH_SHORT).show();
 
@@ -131,7 +141,7 @@ public class InstrumentPlay extends AppCompatActivity {
         }
         else if (on && mode == "restart"){
             startAnim();
-            mediaPlayer.seekTo(mediaPlayer.getCurrentPosition()); // Esta linea es para que empiece por donde iba, y lo que le resto es porque tiene un poco de delay
+            mediaPlayer.seekTo(mediaPlayer.getCurrentPosition());
             mediaPlayer.start();
             play_btn.setImageResource(R.drawable.dino_normal);
             bimboPlay.setImageResource(imageInicio);
@@ -144,11 +154,27 @@ public class InstrumentPlay extends AppCompatActivity {
 
     public void loop(View view) {
         if(on){
-            if(!mediaPlayer.isLooping()){
-                mediaPlayer.setLooping(true);
+            if(!mediaPlayer.isLooping() && !loop){
+                loop = true;
                 loop_btn.setImageResource(imageInicio);
-            }else {
+                mediaPlayer.setLooping(true);
+
+            }else if(mediaPlayer.isLooping() && loop) {
+                loop = false;
                 mediaPlayer.setLooping(false);
+                loop_btn.setImageResource(imageFin);
+
+            }
+
+        }
+        else{
+            if(!loop) {
+                loop = true;
+                loop_btn.setImageResource(imageInicio);
+            }
+
+            else if(loop){
+                loop = false;
                 loop_btn.setImageResource(imageFin);
             }
 
@@ -156,7 +182,12 @@ public class InstrumentPlay extends AppCompatActivity {
 
 
 
-    }
+
+        }
+
+
+
+
 
     public void finalizar(View view) {
 
@@ -185,67 +216,30 @@ public class InstrumentPlay extends AppCompatActivity {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         AdapterPersonalizado2 adapter2 = new AdapterPersonalizado2(this, images, titulos);
         list_Cancion.setAdapter(adapter2);
+
+        android.app.AlertDialog dialog = builder
+                .setTitle("Nueva Canción")
+                .setMessage("Elige una canción para añadir")
+                .setView(list_Cancion)
+                .create();
+
         list_Cancion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 usuarioDAO.insertRecCancion(titulos[position],title, user_id);
                 Toast.makeText(InstrumentPlay.this, "Audio añadido con éxito", Toast.LENGTH_SHORT).show();
-
+                dialog.dismiss();
             }
         });
 
 
-        builder.setTitle("Nueva Canción")
-                .setMessage("Elige una canción para añadir")
-                .setView(list_Cancion)
-        ;
-
-        builder.create().show();
+        dialog.show();
 
     }
 
 
 
-    public void delete(View view) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("¡Alerta!")
-                .setMessage("¿Deseas retirar este audio de la canción o eliminarlo")
-                .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        int id = usuarioDAO.checkId(title, instrumentoSelected, user_id);
-                        usuarioDAO.deleteRec(user_id, instrumentoSelected, title);
-                        String ruta = getExternalFilesDir(null).getAbsolutePath() + "/" + String.valueOf(id)+".3gp";
-                        File archivo = new File(ruta);
 
-                        if (archivo.exists()) {
-                            boolean deleted = archivo.delete();
-                            if (deleted) {
-                                Toast.makeText(InstrumentPlay.this, "Audio eliminado con éxito", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Toast.makeText(InstrumentPlay.this, "No se pudo eliminar el audio", Toast.LENGTH_SHORT).show();
-                            }
-                        } else {
-                            Toast.makeText(InstrumentPlay.this, "El archivo no existe", Toast.LENGTH_SHORT).show();
-                        }
-                        finish();
-                    }
-                })
-                .setNegativeButton("Retirar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        String cancion = usuarioDAO.checkRecCancion(title, instrumentoSelected, user_id);
-                        usuarioDAO.deleteRecCancion(cancion, title, user_id);
-                        Toast.makeText(InstrumentPlay.this, "Audio retirado con éxito", Toast.LENGTH_SHORT).show();
-                        dialog.dismiss();
-
-                    }
-                });
-
-        builder.create().show();
-
-
-    }
 
 
 

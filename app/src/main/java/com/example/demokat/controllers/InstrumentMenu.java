@@ -25,6 +25,7 @@ import com.example.demokat.adapters.AdapterPersonalizado2;
 import com.example.demokat.database.UsuarioDAO;
 
 import java.io.File;
+import java.sql.Timestamp;
 
 public class InstrumentMenu extends AppCompatActivity {
     private ListView listView;
@@ -128,6 +129,7 @@ public class InstrumentMenu extends AppCompatActivity {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             usuarioDAO.deleteNota(user_id, title);
+                                            Toast.makeText(InstrumentMenu.this, "Nota eliminada con éxito", Toast.LENGTH_SHORT).show();
                                             crearLista();
                                         }
                                     })
@@ -174,15 +176,17 @@ public class InstrumentMenu extends AppCompatActivity {
                                 public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                                     view.setPressed(false);
                                     title = titulos[position];
+
+
+
                                     AlertDialog.Builder builder = new AlertDialog.Builder(InstrumentMenu.this);
                                     builder.setTitle("¡Alerta!")
                                             .setMessage("¿Deseas eliminar este audio?")
                                             .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
-                                                    int id = usuarioDAO.checkId(title, instrumento, user_id);
                                                     usuarioDAO.deleteRec(user_id, instrumento, title);
-                                                    String ruta = getExternalFilesDir(null).getAbsolutePath() + "/" + String.valueOf(id)+".3gp";
+                                                    String ruta = usuarioDAO.loadURI(user_id,instrumento,title) + ".3gp";
                                                     File archivo = new File(ruta);
 
                                                     if (archivo.exists()) {
@@ -284,15 +288,46 @@ public class InstrumentMenu extends AppCompatActivity {
                 view.setPressed(false);
 
                 title = finalTitulos[position];
+                if(instrumento=="Notas"){
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(InstrumentMenu.this);
+                    builder.setTitle("¡Alerta!")
+                            .setMessage("¿Deseas eliminar esta nota?")
+                            .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    usuarioDAO.deleteNota(user_id, title);
+                                    Toast.makeText(InstrumentMenu.this, "Nota eliminada con éxito", Toast.LENGTH_SHORT).show();
+                                    crearLista();
+                                }
+                            })
+                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+
+                                }
+                            });
+
+                    builder.create().show();
+
+                    return true;
+                } ;
                 AlertDialog.Builder builder = new AlertDialog.Builder(InstrumentMenu.this);
                 builder.setTitle("¡Alerta!")
                         .setMessage("¿Deseas eliminar este audio?")
                         .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                int id = usuarioDAO.checkId(title, instrumento, user_id);
+                                Timestamp fecha = usuarioDAO.checkFecha(title, instrumento, user_id);
+                                String[] rutastamp = String.valueOf(fecha).split("[-:. ]");
+                                String rutaJunta="";
+                                for (int i = 0; i < rutastamp.length; i++) {
+                                    rutaJunta += rutastamp[i]; // Concatenamos cada parte
+                                }
+
                                 usuarioDAO.deleteRec(user_id, instrumento, title);
-                                String ruta = getExternalFilesDir(null).getAbsolutePath() + "/" + String.valueOf(id)+".3gp";
+                                String ruta = getExternalFilesDir(null).getAbsolutePath() + "/" + rutaJunta+".3gp";
                                 File archivo = new File(ruta);
 
                                 if (archivo.exists()) {
@@ -367,7 +402,6 @@ public class InstrumentMenu extends AppCompatActivity {
     }
 
     public void onResume(){
-
         super.onResume();
         crearLista();
         searchView.clearFocus();//ESTO ES PARA QUE EL TECLADO NO APAREZCA AUTOMATICAMENTE AL VOLVER

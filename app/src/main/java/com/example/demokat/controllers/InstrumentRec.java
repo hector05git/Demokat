@@ -30,7 +30,12 @@ import com.example.demokat.database.UsuarioDAO;
 import com.example.demokat.models.RecModel;
 
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 public class InstrumentRec extends AppCompatActivity {
     private ImageView bimboPlay;
@@ -54,6 +59,7 @@ public class InstrumentRec extends AppCompatActivity {
     private int click;
     TextView bpm;
     private ImageView mas, menos;
+    Timestamp timestamp;
 
 
     @SuppressLint("MissingInflatedId")
@@ -180,8 +186,19 @@ public class InstrumentRec extends AppCompatActivity {
 
     private void prepareMediaRecorder() {
         //LO PRIMERO
-        int id = usuarioDAO.getLastId()+1;
-        outputFilePath = getExternalFilesDir(null).getAbsolutePath() + "/" + String.valueOf(id)+ ".3gp";
+
+
+        LocalDateTime fechaHora = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String fechaHoraString = fechaHora.format(formatter);
+        timestamp = Timestamp.valueOf(fechaHoraString);
+        String[] rutastamp = String.valueOf(timestamp).split("[-:. ]");
+        String rutaJunta="";
+        for (int i = 0; i < rutastamp.length; i++) {
+            rutaJunta += rutastamp[i];
+        }
+
+        outputFilePath = getExternalFilesDir(null).getAbsolutePath() + "/" + rutaJunta + ".3gp";
         mediaRecorder = new MediaRecorder();
         mediaRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mediaRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
@@ -239,7 +256,7 @@ public class InstrumentRec extends AppCompatActivity {
 
     public void showInputDialog(View view) {
 
-        EditText input = null;
+        EditText inputTitulo = null;
         if (on) {
             try {
                 mediaRecorder.pause();
@@ -253,35 +270,16 @@ public class InstrumentRec extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            input = new EditText(this);
-            InputFilter filter = new InputFilter() {
-                @Override
-                public CharSequence filter(CharSequence source, int start, int end, Spanned dest, int dstart, int dend) {
-
-                    String allowedChars = "^[a-zA-Z0-9]+$";
-
-
-                    if (source.equals("")) {
-                        return null;
-                    }
-
-                    if (source.toString().matches(allowedChars)) {
-                        return null;
-                    }
-
-                    return "";
-                }
-            };
-            input.setFilters(new InputFilter[]{filter});
+            inputTitulo = new EditText(this);
 
         }
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        EditText finalInput = input;
+        EditText finalInput = inputTitulo;
         builder.setTitle("Titulo")
                 .setMessage("Escriba un titulo para su grabación")
-                .setView(input)
+                .setView(inputTitulo)
 
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
@@ -310,11 +308,9 @@ public class InstrumentRec extends AppCompatActivity {
                 .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss(); // Simplemente cerrar el diálogo
+                        dialog.dismiss();
                     }
                 });
-
-        // Mostrar el AlertDialog
         builder.create().show();
     }
 
@@ -323,11 +319,12 @@ public class InstrumentRec extends AppCompatActivity {
 
             String titulo2 = input2.trim();
             String instrumento = MainMenu.getInstrumento();
-            LocalDate fecha = LocalDate.now();
-            int user_id = MainActivity.getUser_id();
 
 
-            RecModel recModel = new RecModel(outputFilePath, titulo2, instrumento, fecha, user_id);
+        int user_id = MainActivity.getUser_id();
+
+
+            RecModel recModel = new RecModel(outputFilePath, titulo2, instrumento, timestamp, user_id);
 
 
             usuarioDAO.insertRec(recModel);

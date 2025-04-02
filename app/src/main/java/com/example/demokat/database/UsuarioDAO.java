@@ -12,6 +12,8 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -325,7 +327,7 @@ public class UsuarioDAO extends DatabaseManager{
             String rec = recModel.getRec();
             String titulo = recModel.getTitulo();
             String instrumento = recModel.getInstrumento();
-            LocalDate fecha = recModel.getFecha();
+            Timestamp fecha = recModel.getFecha();
             int user_id = recModel.getUser_id();
 
             try {
@@ -339,7 +341,7 @@ public class UsuarioDAO extends DatabaseManager{
                 sentenciaPar.setString(1,rec);
                 sentenciaPar.setString(2,titulo);
                 sentenciaPar.setString(3,instrumento);
-                sentenciaPar.setDate(4, Date.valueOf(String.valueOf(fecha)));
+                sentenciaPar.setTimestamp(4, fecha);
                 sentenciaPar.setInt(5,user_id);
 
 
@@ -478,32 +480,10 @@ public class UsuarioDAO extends DatabaseManager{
     }
 
 
-    public int getLastId() {
-        String query = "SELECT id_rec FROM rec ORDER BY id_rec DESC LIMIT 1 ";
-
-        try {
 
 
-            PreparedStatement sentenciaPar = connection.prepareStatement(query);
-
-            ResultSet resultSet = sentenciaPar.executeQuery();
-
-            if(resultSet.next()) {
-
-                return resultSet.getInt("id_rec");
-            }
-
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
-        return 0;
-    }
-
-
-    public int checkId(String title, String instrumento, int userid) {
-        String query = "SELECT id_rec FROM rec WHERE titulo = ? AND instrumento =? AND user_id=?;";
+    public Timestamp checkFecha(String title, String instrumento, int userid) {
+        String query = "SELECT fecha FROM rec WHERE titulo = ? AND instrumento =? AND user_id=?;";
 
         try {
 
@@ -517,15 +497,15 @@ public class UsuarioDAO extends DatabaseManager{
 
             if(resultSet.next()) {
 
-                return resultSet.getInt("id_rec");
+                return resultSet.getTimestamp("fecha");
             }
 
 
         } catch (SQLException e) {
             e.printStackTrace();
-            return 0;
+            return null;
         }
-        return 0;
+        return null;
     }
 
 
@@ -794,6 +774,30 @@ public class UsuarioDAO extends DatabaseManager{
             throw new RuntimeException(ex);
         }
     }
+
+
+    public void deleteCancion(int userId, String titulo) {
+
+
+        try {
+
+            query ="DELETE FROM cancion WHERE user_id = ? AND titulo = ?;";
+
+
+
+            sentenciaPar = connection.prepareStatement(query);
+
+
+            sentenciaPar.setInt(1,userId);
+            sentenciaPar.setString(2,titulo);
+            sentenciaPar.executeUpdate();
+
+        } catch (SQLException ex) {
+            throw new RuntimeException(ex);
+        }
+    }
+
+
 
 
 }
