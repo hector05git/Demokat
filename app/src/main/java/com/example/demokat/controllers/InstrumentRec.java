@@ -288,7 +288,7 @@ public class InstrumentRec extends AppCompatActivity {
                             } else {
                                 mediaRecorder.release();
                                 mediaRecorder = null;
-                                Toast.makeText(InstrumentRec.this, getString(R.string.audio_guardado) + userInput, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(InstrumentRec.this, getString(R.string.audio_guardado) + ": " + userInput, Toast.LENGTH_SHORT).show();
 
                                 finalizar(userInput);
                             }

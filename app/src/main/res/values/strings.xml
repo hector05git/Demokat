@@ -57,12 +57,12 @@
     <string name="OK">OK</string>
     <string name="cancelar">Cancelar</string>
     <string name="cerrar_sesion">¿Desea cerrar sesión?</string>
-
     <string name="metronomo">Metrónomo</string>
     <string name="cancionero">Cancionero</string>
     <string name="rec_play">Rec/Play</string>
     <string name="log_in">Inicia Sesión</string>
     <string name="sign_in">Regístrate</string>
     <string name="logueado">logueado </string>
+    <string name="escriba_aqui">Escriba aquí </string>
 
 </resources>

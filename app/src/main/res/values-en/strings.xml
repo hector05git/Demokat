@@ -64,4 +64,5 @@
     <string name="sign_in">Sign Up</string>
     <string name="logueado">logged in</string>
     <string name="nota_creada">Note successfully created</string>
+    <string name="escriba_aqui">Write here </string>
 </resources>
