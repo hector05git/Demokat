@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Demokat</string>
+    <string name="app_name">DemoKat</string>
     <string name="iniciaSesion">Inicia Sesion</string>
     <string name="usuario">Usuario</string>
     <string name="contrasena">Contraseña</string>
@@ -13,11 +13,56 @@
     <string name="rellene_contrasena">Por favor, rellene su contraseña</string>
     <string name="repita_contrasena">Por favor, repita su contraseña</string>
     <string name="contrasenas_no_coinciden">Las contraseñas no coinciden</string>
-    <string name="usuario_creado">¡Usuario creado correctamente!</string>
+    <string name="usuario_creado">¡Usuario creado con éxito!</string>
     <string name="error_bd">Ha ocurrido un error con la base de datos</string>
     <string name="usu_con_err">Usuario o contraseña incorrectos</string>
     <string name="incorrect">Usuario o contraseña incorrectos</string>
     <string name="bbddIncorrect">Ha ocurrido un error con la base de datos</string>
+    <string name="nota_anadida">Nota añadida con éxito</string>
+    <string name="nota_eliminada">Nota eliminada con éxito</string>
+    <string name="audio_anadido">Audio añadido con éxito</string>
+    <string name="audio_eliminado">Audio eliminado con éxito</string>
+    <string name="cancion_eliminada">Canción eliminada con éxito</string>
+    <string name="audio_eliminado_error">Error al eliminar el audio</string>
+    <string name="prepare_error">Error al preparar la grabación</string>
+    <string name="inicio_error">Error al iniciar la grabación</string>
+    <string name="detener_error">Error al detener la grabación</string>
+    <string name="titulo_rec">Escriba un titulo para su grabación</string>
+    <string name="titulo">Titulo</string>
+    <string name="primero_grabar">primero debes empezar a grabar</string>
+    <string name="escriba_usuario">Usuario</string>
+    <string name="escriba_nombre">Nombre</string>
+    <string name="escriba_apellido">Apellido</string>
+    <string name="escriba_contrasena">Contraseña</string>
+    <string name="repita2_contrasena">Repita Contraseña</string>
+    <string name="grabacion_existente">Ya tienes una grabación con ese título</string>
+    <string name="cancion_existente">Ya tienes una canción con ese título</string>
+    <string name="nota_existente">Ya tienes una nota con ese título</string>
+    <string name="titulo_notas">Escriba un título para tus notas</string>
+    <string name="audio_guardado">Audio guardado </string>
+    <string name="no_ingreso">No se ingresó texto </string>
+    <string name="alerta">¡Alerta!</string>
+    <string name="eliminar_nota">¿Deseas eliminar esta nota?</string>
+    <string name="eliminar_audio">¿Deseas eliminar este audio?</string>
+    <string name="eliminar_cancion">¿Deseas eliminar esta canción?</string>
+    <string name="eliminar">Eliminar</string>
+    <string name="retirar">Retirar</string>
+    <string name="deseas_retirar">¿Deseas retirar este elemento?</string>
+    <string name="nota_retirada">Nota retirada con éxito</string>
+    <string name="nota_creada">Nota creada con éxito</string>
+    <string name="audio_retirado">Audio retirado con éxito</string>
+    <string name="nueva_cancion">Nueva Canción</string>
+    <string name="elige_cancion">Elige una cancion para añadir</string>
+    <string name="titulo_cancion">Escriba un titulo para su canción</string>
+    <string name="OK">OK</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="cerrar_sesion">¿Desea cerrar sesión?</string>
 
+    <string name="metronomo">Metrónomo</string>
+    <string name="cancionero">Cancionero</string>
+    <string name="rec_play">Rec/Play</string>
+    <string name="log_in">Inicia Sesión</string>
+    <string name="sign_in">Regístrate</string>
+    <string name="logueado">logueado </string>
 
 </resources>

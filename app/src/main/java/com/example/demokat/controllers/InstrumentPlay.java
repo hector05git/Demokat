@@ -116,7 +116,7 @@ public class InstrumentPlay extends AppCompatActivity {
 
 
             } catch (IOException e) {
-                Toast.makeText(this,"UPSI",Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,"ERROR",Toast.LENGTH_SHORT).show();
 
             }
             mediaPlayer.start();
@@ -222,8 +222,8 @@ public class InstrumentPlay extends AppCompatActivity {
         list_Cancion.setAdapter(adapter2);
 
         android.app.AlertDialog dialog = builder
-                .setTitle("Nueva Canción")
-                .setMessage("Elige una canción para añadir")
+                .setTitle(getString(R.string.nueva_cancion))
+                .setMessage(getString(R.string.elige_cancion))
                 .setView(list_Cancion)
                 .create();
 
@@ -231,7 +231,7 @@ public class InstrumentPlay extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 usuarioDAO.insertRecCancion(titulos[position],title, user_id, instrumentoSelected);
-                Toast.makeText(InstrumentPlay.this, "Audio añadido con éxito", Toast.LENGTH_SHORT).show();
+                Toast.makeText(InstrumentPlay.this, getString(R.string.audio_anadido), Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -283,7 +283,7 @@ public class InstrumentPlay extends AppCompatActivity {
             } else {
                 int res = usuarioDAO.checkTitle(user_id, instrumentoSelected, tituloEdit);
                 if (res == 0) {
-                    Toast.makeText(this, "Ya tienes una grabación con ese nombre", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.grabacion_existente), Toast.LENGTH_SHORT).show();
                     return;
 
                 } else {

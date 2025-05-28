@@ -44,7 +44,7 @@ public class MainMenu extends AppCompatActivity {
 
     public void crearLista() {
         int[] images = {R.drawable.guitaricon, R.drawable.drumsicon, R.drawable.vozicon, R.drawable.bassicon, R.drawable.notasicon};
-        String[] titulos = {"Guitarra", "Batería","Voz", "Bajo", "Notas"};
+        String[] titulos = {"Guitarra", "Batería", "Voz", "Bajo", "Notas"};
 
 
         AdapterPersonalizado adapter = new AdapterPersonalizado(this, images, titulos);
@@ -61,22 +61,22 @@ public class MainMenu extends AppCompatActivity {
                     startActivity(intent);
                 }
                 if (titulos[position].equals("Voz")) {
-                    instrumento = "Voz";
+                    instrumento = String.valueOf("Voz");
                     Intent intent = new Intent(MainMenu.this, InstrumentMenu.class);
                     startActivity(intent);
                 }
-                if (titulos[position].equals("Batería")) {
-                    instrumento = "Batería";
+                if (titulos[position].equals(String.valueOf("Batería"))) {
+                    instrumento = String.valueOf("Batería");
                     Intent intent = new Intent(MainMenu.this, InstrumentMenu.class);
                     startActivity(intent);
                 }
                 if (titulos[position].equals("Bajo")) {
-                    instrumento = "Bajo";
+                    instrumento = String.valueOf("Bajo");
                     Intent intent = new Intent(MainMenu.this, InstrumentMenu.class);
                     startActivity(intent);
                 }
                 if (titulos[position].equals("Notas")) {
-                    instrumento = "Notas";
+                    instrumento = String.valueOf("Notas");
                     Intent intent = new Intent(MainMenu.this, InstrumentMenu.class);
                     startActivity(intent);
                 }

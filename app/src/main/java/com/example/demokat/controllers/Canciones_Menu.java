@@ -23,6 +23,8 @@ import com.example.demokat.R;
 import com.example.demokat.adapters.AdapterPersonalizado3;
 import com.example.demokat.database.DAO;
 
+import java.util.Objects;
+
 public class Canciones_Menu extends AppCompatActivity {
     private String cancion_titulo = CancioneroMenu.getCancion_titulo();
     private TextView textView;
@@ -64,7 +66,7 @@ public class Canciones_Menu extends AppCompatActivity {
                 String[] notas = new String[titulos2.length];
 
                 for (int i = 0; i < titulos2.length; i++) {
-                    notas[i] ="Notas";
+                    notas[i] =String.valueOf("Notas");
                 }
                 String[] combinados = new String[titulos.length + titulos2.length];
 
@@ -113,7 +115,7 @@ public class Canciones_Menu extends AppCompatActivity {
                         InstrumentMenu.title = finalTitulos[position];
                         instrumento = combinados2[position];
 
-                        if(instrumento=="Notas"){
+                        if(instrumento.equals("Notas")){
                             InstrumentMenu.notaMode="edit";
                             Intent intent = new Intent(Canciones_Menu.this, Notas.class);
                             startActivity(intent);
@@ -135,15 +137,15 @@ public class Canciones_Menu extends AppCompatActivity {
                         InstrumentMenu.title = finalTitulos[position];
                         instrumento = combinados2[position];
                         AlertDialog.Builder builder = new AlertDialog.Builder(Canciones_Menu.this);
-                        builder.setTitle("¡Alerta!")
-                                .setMessage("¿Deseas retirar este elemento?")
-                                .setPositiveButton("Retirar", new DialogInterface.OnClickListener() {
+                        builder.setTitle(getString(R.string.alerta))
+                                .setMessage(getString(R.string.deseas_retirar))
+                                .setPositiveButton(getString(R.string.retirar), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        if(instrumento== "Notas"){
+                                        if(instrumento.equals("Notas")){
                                             String cancion = usuarioDAO.checkNotasCancion(InstrumentMenu.title, user_id);
                                             usuarioDAO.deleteNotasCancion( cancion,InstrumentMenu.title, user_id);
-                                            Toast.makeText(Canciones_Menu.this, "Nota retirada con éxito", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Canciones_Menu.this, getString(R.string.nota_retirada), Toast.LENGTH_SHORT).show();
                                             dialog.dismiss();
                                             crearLista1();
                                             searchView.clearFocus();
@@ -151,7 +153,7 @@ public class Canciones_Menu extends AppCompatActivity {
                                         }else {
                                             String cancion = usuarioDAO.checkRecCancion(InstrumentMenu.title, instrumento, user_id);
                                             usuarioDAO.deleteRecCancion( cancion,InstrumentMenu.title, user_id,instrumento);
-                                            Toast.makeText(Canciones_Menu.this, "Audio retirado con éxito", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(Canciones_Menu.this, getString(R.string.audio_retirado), Toast.LENGTH_SHORT).show();
                                             dialog.dismiss();
                                             crearLista1();
                                             searchView.clearFocus();
@@ -162,7 +164,7 @@ public class Canciones_Menu extends AppCompatActivity {
 
                                     }
                                 })
-                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
@@ -255,7 +257,7 @@ public class Canciones_Menu extends AppCompatActivity {
                 InstrumentMenu.title = finalTitulos[position];
                 instrumento = combinados2[position];
 
-                if(instrumento=="Notas"){
+                if(Objects.equals(instrumento, String.valueOf("Notas"))){
                     InstrumentMenu.notaMode="edit";
                     Intent intent = new Intent(Canciones_Menu.this, Notas.class);
                     startActivity(intent);
@@ -277,21 +279,21 @@ public class Canciones_Menu extends AppCompatActivity {
                 InstrumentMenu.title = finalTitulos[position];
                 instrumento = combinados2[position];
                 AlertDialog.Builder builder = new AlertDialog.Builder(Canciones_Menu.this);
-                builder.setTitle("¡Alerta!")
-                        .setMessage("¿Deseas retirar este elemento?")
-                        .setPositiveButton("Retirar", new DialogInterface.OnClickListener() {
+                builder.setTitle(getString(R.string.alerta))
+                        .setMessage(getString(R.string.deseas_retirar))
+                        .setPositiveButton(getString(R.string.retirar), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                if(instrumento== "Notas"){
+                                if(instrumento.equals(String.valueOf("Notas"))){
                                     String cancion = usuarioDAO.checkNotasCancion(InstrumentMenu.title, user_id);
                                     usuarioDAO.deleteNotasCancion( cancion,InstrumentMenu.title, user_id);
-                                    Toast.makeText(Canciones_Menu.this, "Nota retirada con éxito", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(Canciones_Menu.this, getString(R.string.nota_retirada), Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                     crearLista1();
                                 }else {
                                     String cancion = usuarioDAO.checkRecCancion(InstrumentMenu.title, instrumento, user_id);
                                     usuarioDAO.deleteRecCancion( cancion,InstrumentMenu.title, user_id, instrumento);
-                                    Toast.makeText(Canciones_Menu.this, "Audio retirado con éxito", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(Canciones_Menu.this, getString(R.string.audio_retirado), Toast.LENGTH_SHORT).show();
                                     dialog.dismiss();
                                     crearLista1();
                                 }
@@ -300,7 +302,7 @@ public class Canciones_Menu extends AppCompatActivity {
 
                             }
                         })
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

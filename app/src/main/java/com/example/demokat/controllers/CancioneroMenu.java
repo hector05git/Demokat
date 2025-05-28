@@ -85,13 +85,13 @@ public class CancioneroMenu extends AppCompatActivity {
                     public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                         cancion_titulo = titulos[position];
                         AlertDialog.Builder builder = new AlertDialog.Builder(CancioneroMenu.this);
-                        builder.setTitle("¡Alerta!")
-                                .setMessage("¿Deseas eliminar esta cancion?")
-                                .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                        builder.setTitle(getString(R.string.alerta))
+                                .setMessage(getString(R.string.eliminar_cancion))
+                                .setPositiveButton(getString(R.string.eliminar), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         usuarioDAO.deleteCancion(user_id, cancion_titulo);
-                                        Toast.makeText(CancioneroMenu.this, "Canción eliminada", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(CancioneroMenu.this, getString(R.string.cancion_eliminada), Toast.LENGTH_SHORT).show();
                                         crearLista2();
                                         searchView.clearFocus();
                                         searchView.setQuery("", false);
@@ -99,7 +99,7 @@ public class CancioneroMenu extends AppCompatActivity {
 
                                     }
                                 })
-                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
@@ -127,21 +127,21 @@ public class CancioneroMenu extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         EditText finalInput = new EditText(this);
-        builder.setTitle("Nueva Canción")
-                .setMessage("Escriba un titulo para su canción")
+        builder.setTitle(getString(R.string.nueva_cancion))
+                .setMessage(getString(R.string.titulo_cancion))
                 .setView(finalInput)
 
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String userInput = finalInput.getText().toString().trim();
                         if (!userInput.isEmpty()) {
                             int i = usuarioDAO.checkCancion(user_id, userInput);
                             if (i == 0) {
-                                Toast.makeText(CancioneroMenu.this, "Ya tienes una canción con ese título", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CancioneroMenu.this, getString(R.string.cancion_existente), Toast.LENGTH_SHORT).show();
                             } else {
 
-                                Toast.makeText(CancioneroMenu.this, "Nueva Canción: " + userInput, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(CancioneroMenu.this, getString(R.string.nueva_cancion) +": " + userInput, Toast.LENGTH_SHORT).show();
                                 usuarioDAO.insertCancion(userInput,user_id);
                                 crearLista2();
 
@@ -150,12 +150,12 @@ public class CancioneroMenu extends AppCompatActivity {
 
                         } else {
 
-                            Toast.makeText(CancioneroMenu.this, "No se ingresó texto", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CancioneroMenu.this, getString(R.string.no_ingreso), Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
 
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss(); // Simplemente cerrar el diálogo
@@ -197,19 +197,19 @@ public class CancioneroMenu extends AppCompatActivity {
             public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
                 cancion_titulo = titulos[position];
                 AlertDialog.Builder builder = new AlertDialog.Builder(CancioneroMenu.this);
-                builder.setTitle("¡Alerta!")
-                        .setMessage("¿Deseas eliminar esta cancion?")
-                        .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                builder.setTitle(getString(R.string.alerta))
+                        .setMessage(getString(R.string.eliminar_cancion))
+                        .setPositiveButton(getString(R.string.eliminar), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 usuarioDAO.deleteCancion(user_id, cancion_titulo);
-                            Toast.makeText(CancioneroMenu.this, "Canción eliminada", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(CancioneroMenu.this, getString(R.string.cancion_eliminada), Toast.LENGTH_SHORT).show();
                             crearLista2();
 
 
                             }
                         })
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                        .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();

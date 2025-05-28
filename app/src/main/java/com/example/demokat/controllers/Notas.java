@@ -77,8 +77,8 @@ public class Notas extends AppCompatActivity {
         list_Cancion.setAdapter(adapter2);
 
         android.app.AlertDialog dialog = builder
-                .setTitle("Nueva Canción")
-                .setMessage("Elige una canción para añadir")
+                .setTitle(R.string.nueva_cancion)
+                .setMessage(R.string.elige_cancion)
                 .setView(list_Cancion)
                 .create();
 
@@ -86,7 +86,7 @@ public class Notas extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 usuarioDAO.insertNotasCancion(titulos[position],title, user_id);
-                Toast.makeText(Notas.this, "Nota añadida con éxito", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Notas.this, R.string.nota_anadida, Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });
@@ -95,11 +95,6 @@ public class Notas extends AppCompatActivity {
         dialog.show();
 
     }
-
-
-
-
-
 
 
     @SuppressLint("MissingSuperCall")
@@ -115,7 +110,7 @@ public class Notas extends AppCompatActivity {
                 else if (!tituloEdit.equals(title)) {
                     int res = usuarioDAO.checkTitleNotas(user_id, tituloEdit);
                     if (res == 0) {
-                        Toast.makeText(this, "Ya tienes una nota con ese nombre", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, getString(R.string.titulo_notas), Toast.LENGTH_SHORT).show();
                         return;
 
                     } else {
@@ -146,17 +141,18 @@ public class Notas extends AppCompatActivity {
             finish();
         }
         else if(tituloEdit.isEmpty() && !notasEdit.isEmpty()){
-                Toast.makeText(this, "Escriba un nombre para tus notas", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.titulo_notas), Toast.LENGTH_SHORT).show();
                 return;
             }
             else if (!tituloEdit.isEmpty()){
                 int res = usuarioDAO.checkTitleNotas(user_id, tituloEdit);
                 if (res == 0) {
-                    Toast.makeText(this, "Ya tienes una nota con ese nombre", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, getString(R.string.nota_existente), Toast.LENGTH_SHORT).show();
                     return;
 
                 }else{
                     usuarioDAO.insertNota(tituloEdit,notasEdit,user_id);
+                    Toast.makeText(this, getString(R.string.nota_creada), Toast.LENGTH_SHORT).show();
                     finish();
                 }
 

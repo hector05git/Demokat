@@ -204,7 +204,7 @@ public class InstrumentRec extends AppCompatActivity {
         try {
             mediaRecorder.prepare();
         } catch (IOException e) {
-            Toast.makeText(this, "Error al preparar la grabación", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.prepare_error), Toast.LENGTH_SHORT).show();
             e.printStackTrace();
         }
     }
@@ -224,7 +224,7 @@ public class InstrumentRec extends AppCompatActivity {
 
 
             } catch (IllegalStateException e) {
-                Toast.makeText(this, "Error al iniciar la grabación", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.inicio_error), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
@@ -262,7 +262,7 @@ public class InstrumentRec extends AppCompatActivity {
 
 
             } catch (IllegalStateException e) {
-                Toast.makeText(this, "Error al detener la grabación", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, getString(R.string.detener_error), Toast.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
 
@@ -273,22 +273,22 @@ public class InstrumentRec extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         EditText finalInput = inputTitulo;
-        builder.setTitle("Titulo")
-                .setMessage("Escriba un titulo para su grabación")
+        builder.setTitle(getString(R.string.titulo))
+                .setMessage(getString(R.string.titulo_rec))
                 .setView(inputTitulo)
 
-                .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                .setPositiveButton(R.string.OK, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         String userInput = finalInput.getText().toString().trim();
                         if (!userInput.isEmpty()) {
                             int i = usuarioDAO.checkTitle(user_id, instrumento, userInput);
                             if (i == 0) {
-                                Toast.makeText(InstrumentRec.this, "Ya tienes una grabación con ese título", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(InstrumentRec.this, getString(R.string.grabacion_existente), Toast.LENGTH_SHORT).show();
                             } else {
                                 mediaRecorder.release();
                                 mediaRecorder = null;
-                                Toast.makeText(InstrumentRec.this, "Audio guardado  " + userInput, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(InstrumentRec.this, getString(R.string.audio_guardado) + userInput, Toast.LENGTH_SHORT).show();
 
                                 finalizar(userInput);
                             }
@@ -296,12 +296,12 @@ public class InstrumentRec extends AppCompatActivity {
 
                         } else {
 
-                            Toast.makeText(InstrumentRec.this, "No se ingresó texto", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(InstrumentRec.this, getString(R.string.no_ingreso), Toast.LENGTH_SHORT).show();
                         }
                     }
                 })
 
-                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
@@ -309,7 +309,7 @@ public class InstrumentRec extends AppCompatActivity {
                 });
         builder.create().show();
         }else {
-            Toast.makeText(InstrumentRec.this, "Primero debes empezar a grabar", Toast.LENGTH_SHORT).show();
+            Toast.makeText(InstrumentRec.this, getString(R.string.primero_grabar), Toast.LENGTH_SHORT).show();
         }
     }
 

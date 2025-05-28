@@ -97,12 +97,12 @@ public class MainActivity extends AppCompatActivity {
         String usuario = String.valueOf(usu.getText()).trim();
         String contrasena = String.valueOf(con.getText()).trim();
         if (usuario.isEmpty()) {
-            Toast.makeText(this, R.string.rellene_usuario, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.rellene_usuario), Toast.LENGTH_SHORT).show();
 
             return;
         }
         if (contrasena.isEmpty()) {
-            Toast.makeText(this, R.string.rellene_contrasena, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.rellene_contrasena), Toast.LENGTH_SHORT).show();
 
             return;
         }
@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         else {
             user_id = usuarioModel1.getId();
-            Toast.makeText(this,   usuarioModel1.getUser() + " logeado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,   usuarioModel1.getUser() + " "+ getString(R.string.logueado), Toast.LENGTH_SHORT).show();
             usuarioModel = null;
             animar.interrupt();
             Intent intent = new Intent(this, ButtonsMenu.class);

@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="37dp"
             android:fontFamily="@font/adlam_display"
-            android:text="Metrónomo"
+            android:text="@string/metronomo"
             android:textColor="@color/white"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"

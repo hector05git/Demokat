@@ -118,17 +118,17 @@ public class InstrumentMenu extends AppCompatActivity {
 
                             title = titulos[position];
                             AlertDialog.Builder builder = new AlertDialog.Builder(InstrumentMenu.this);
-                            builder.setTitle("¡Alerta!")
-                                    .setMessage("¿Deseas eliminar esta nota?")
-                                    .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                            builder.setTitle(getString(R.string.alerta))
+                                    .setMessage(getString(R.string.eliminar_nota))
+                                    .setPositiveButton(getString(R.string.eliminar), new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             usuarioDAO.deleteNota(user_id, title);
-                                            Toast.makeText(InstrumentMenu.this, "Nota eliminada con éxito", Toast.LENGTH_SHORT).show();
+                                            Toast.makeText(InstrumentMenu.this, getString(R.string.nota_eliminada), Toast.LENGTH_SHORT).show();
                                             crearLista();
                                         }
                                     })
-                                    .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
                                             dialog.dismiss();
@@ -175,9 +175,9 @@ public class InstrumentMenu extends AppCompatActivity {
 
 
                                     AlertDialog.Builder builder = new AlertDialog.Builder(InstrumentMenu.this);
-                                    builder.setTitle("¡Alerta!")
-                                            .setMessage("¿Deseas eliminar este audio?")
-                                            .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                                    builder.setTitle(getString(R.string.alerta))
+                                            .setMessage(getString(R.string.eliminar_audio))
+                                            .setPositiveButton(getString(R.string.eliminar), new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     usuarioDAO.deleteRec(user_id, instrumento, title);
@@ -187,17 +187,17 @@ public class InstrumentMenu extends AppCompatActivity {
                                                     if (archivo.exists()) {
                                                         boolean deleted = archivo.delete();
                                                         if (deleted) {
-                                                            Toast.makeText(InstrumentMenu.this, "Audio eliminado con éxito", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(InstrumentMenu.this, getString(R.string.audio_eliminado), Toast.LENGTH_SHORT).show();
                                                         } else {
-                                                            Toast.makeText(InstrumentMenu.this, "No se pudo eliminar el audio", Toast.LENGTH_SHORT).show();
+                                                            Toast.makeText(InstrumentMenu.this, getString(R.string.audio_eliminado_error), Toast.LENGTH_SHORT).show();
                                                         }
                                                     } else {
-                                                        Toast.makeText(InstrumentMenu.this, "El archivo no existe", Toast.LENGTH_SHORT).show();
+                                                        Toast.makeText(InstrumentMenu.this, getString(R.string.audio_eliminado_error), Toast.LENGTH_SHORT).show();
                                                     }
                                                     crearLista();
                                                 }
                                             })
-                                            .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                            .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int which) {
                                                     dialog.dismiss();

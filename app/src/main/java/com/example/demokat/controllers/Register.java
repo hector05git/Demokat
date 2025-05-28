@@ -50,26 +50,26 @@ public class Register extends AppCompatActivity {
         String password1 = String.valueOf(pass1.getText());
         String password2 = String.valueOf(pass2.getText());
         if(username.isEmpty()){
-            Toast.makeText(this, "Porfavor rellene su nombre de usuario", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString( R.string.rellene_usuario), Toast.LENGTH_SHORT).show();
         } else if (namee.isEmpty()) {
-            Toast.makeText(this, "Porfavor rellene su nombre", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.rellene_nombre), Toast.LENGTH_SHORT).show();
 
         } else if (surname.isEmpty()) {
-            Toast.makeText(this, "Porfavor rellene su apellido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.rellene_apellido), Toast.LENGTH_SHORT).show();
 
         } else if (password1.isEmpty()) {
-            Toast.makeText(this, "Porfavor rellene su contraseña", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.rellene_contrasena), Toast.LENGTH_SHORT).show();
 
         } else if (password2.isEmpty()) {
-            Toast.makeText(this, "Porfavor rellene su contraseña otra vez", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.repita_contrasena), Toast.LENGTH_SHORT).show();
 
         } else if (!password1.equals(password2)) {
             pass1.setText("");
             pass2.setText("");
-            Toast.makeText(this, "Las contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.contrasenas_no_coinciden), Toast.LENGTH_SHORT).show();
 
         }else{
-            Toast.makeText(this, "Usuario creado con éxito", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString( R.string.usuario_creado), Toast.LENGTH_SHORT).show();
 
             dao.insertUser(username, namee, surname, password1);
             Intent intent = new Intent(Register.this, MainActivity.class);

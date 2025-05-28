@@ -65,7 +65,7 @@ public class AdapterPersonalizado extends BaseAdapter {
         if(titulos[i].equals("Voz")){
             fondo.setBackgroundResource(R.drawable.vozback);
         }
-        if(titulos[i].equals("Bajo")){
+        if (titulos[i].equals("Bajo")) {
             fondo.setBackgroundResource(R.drawable.bassback);
         }
         if(titulos[i].equals("Notas")){

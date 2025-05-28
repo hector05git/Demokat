@@ -1,11 +1,14 @@
 package com.example.demokat.controllers;
 
 import android.annotation.SuppressLint;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
@@ -35,9 +38,27 @@ public class ButtonsMenu extends AppCompatActivity {
     }
 
     public void logout(View view) {
-        Intent intent = new Intent(ButtonsMenu.this, MainActivity.class);
-        startActivity(intent);
-        finishAffinity();
+        AlertDialog.Builder builder = new AlertDialog.Builder(ButtonsMenu.this);
+        builder.setTitle(getString(R.string.alerta))
+                .setMessage(getString(R.string.cerrar_sesion))
+                .setPositiveButton(getString(R.string.OK), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(ButtonsMenu.this, MainActivity.class);
+                        startActivity(intent);
+                        finishAffinity();
+                    }
+                })
+                .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+
+                    }
+                });
+
+        builder.create().show();
+
     }
 
     public void goToCancionero(View view){
