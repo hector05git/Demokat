@@ -2,7 +2,6 @@ package com.example.demokat.controllers;
 
 import android.annotation.SuppressLint;
 
-import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,15 +13,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.demokat.R;
 import com.example.demokat.adapters.AdapterPersonalizado2;
-import com.example.demokat.database.UsuarioDAO;
+import com.example.demokat.database.DAO;
 
 import java.io.File;
 import java.io.IOException;
@@ -38,9 +37,10 @@ public class InstrumentPlay extends AppCompatActivity {
     int imageFin = R.drawable.dino_click;
     private int user_id = MainActivity.getUser_id();
     private String instrumentoSelected = MainMenu.getInstrumento();
+    private ConstraintLayout fondo;
     private String title = InstrumentMenu.getTitle2();
     String tituloEdit;
-    UsuarioDAO usuarioDAO = MainActivity.getUsuarioDAO();
+    DAO usuarioDAO = MainActivity.getUsuarioDAO();
     Uri uri;
 
     private TextView tituloPlay;
@@ -53,20 +53,24 @@ public class InstrumentPlay extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_instrument_play);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainRec), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
         bimboPlay = findViewById(R.id.bimboGuitar);
+
         play_btn = findViewById(R.id.play_btn2);
         loop_btn = findViewById(R.id.btn_loop);
+        fondo = findViewById(R.id.mainRec);
         File audioFile = new File(usuarioDAO.loadURI(user_id, instrumentoSelected,title));
         uri = Uri.fromFile(audioFile);
 
 
         tituloPlay = findViewById(R.id.titulo_tv);
         tituloPlay.setText(title);
+        loadInstrument();
+        bimboPlay.setImageResource(imageInicio);
     }
 
     private void startAnim() {
@@ -116,7 +120,7 @@ public class InstrumentPlay extends AppCompatActivity {
 
             }
             mediaPlayer.start();
-            play_btn.setImageResource(imageInicio);
+            play_btn.setImageResource(R.drawable.pauseplay);
             mode ="pause";
            mediaPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                @Override
@@ -124,7 +128,7 @@ public class InstrumentPlay extends AppCompatActivity {
                    animar.interrupt();
                    mediaPlayer.release();
                    bimboPlay.setImageResource(imageInicio);
-                   play_btn.setImageResource(imageFin);
+                   play_btn.setImageResource(R.drawable.startplay);
                    mode = "start";
                    on = false;
 
@@ -135,7 +139,7 @@ public class InstrumentPlay extends AppCompatActivity {
                 animar.interrupt();
                 mediaPlayer.pause();
                 mode="restart";
-                play_btn.setImageResource(imageFin);
+                play_btn.setImageResource(R.drawable.startplay);
 
 
         }
@@ -143,7 +147,7 @@ public class InstrumentPlay extends AppCompatActivity {
             startAnim();
             mediaPlayer.seekTo(mediaPlayer.getCurrentPosition());
             mediaPlayer.start();
-            play_btn.setImageResource(R.drawable.dino_normal);
+            play_btn.setImageResource(R.drawable.pauseplay);
             bimboPlay.setImageResource(imageInicio);
             mode="pause";
             on = true;
@@ -156,13 +160,13 @@ public class InstrumentPlay extends AppCompatActivity {
         if(on){
             if(!mediaPlayer.isLooping() && !loop){
                 loop = true;
-                loop_btn.setImageResource(imageInicio);
+                loop_btn.setImageResource(R.drawable.loopon);
                 mediaPlayer.setLooping(true);
 
             }else if(mediaPlayer.isLooping() && loop) {
                 loop = false;
                 mediaPlayer.setLooping(false);
-                loop_btn.setImageResource(imageFin);
+                loop_btn.setImageResource(R.drawable.loopoff);
 
             }
 
@@ -170,12 +174,12 @@ public class InstrumentPlay extends AppCompatActivity {
         else{
             if(!loop) {
                 loop = true;
-                loop_btn.setImageResource(imageInicio);
+                loop_btn.setImageResource(R.drawable.loopon);
             }
 
             else if(loop){
                 loop = false;
-                loop_btn.setImageResource(imageFin);
+                loop_btn.setImageResource(R.drawable.loopoff);
             }
 
         }
@@ -197,7 +201,7 @@ public class InstrumentPlay extends AppCompatActivity {
         mediaPlayer.stop();
         bimboPlay.setImageResource(imageInicio);
         mode = "start";
-        play_btn.setImageResource(imageFin);
+        play_btn.setImageResource(R.drawable.startplay);
 
     }
 
@@ -211,7 +215,7 @@ public class InstrumentPlay extends AppCompatActivity {
         int [] images = new int[titulos.length];
 
         for (int i = 0; i < titulos.length; i++) {
-            images[i] = R.drawable.dino_click;
+            images[i] = R.drawable.addtosong;
         }
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         AdapterPersonalizado2 adapter2 = new AdapterPersonalizado2(this, images, titulos);
@@ -226,7 +230,7 @@ public class InstrumentPlay extends AppCompatActivity {
         list_Cancion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                usuarioDAO.insertRecCancion(titulos[position],title, user_id);
+                usuarioDAO.insertRecCancion(titulos[position],title, user_id, instrumentoSelected);
                 Toast.makeText(InstrumentPlay.this, "Audio añadido con éxito", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
@@ -238,6 +242,31 @@ public class InstrumentPlay extends AppCompatActivity {
     }
 
 
+
+    public void loadInstrument(){
+        if(instrumentoSelected.equals("Guitarra")){
+            fondo.setBackgroundResource(R.drawable.guitarback);
+            imageInicio = R.drawable.bimboguitar;
+            imageFin = R.drawable.bimboguitar2;
+        }
+        if(instrumentoSelected.equals("Voz")){
+            fondo.setBackgroundResource(R.drawable.vozback);
+            imageInicio = R.drawable.bimbovoz;
+            imageFin = R.drawable.bimbovoz2;
+        }
+        if(instrumentoSelected.equals("Batería")){
+            fondo.setBackgroundResource(R.drawable.drumback);
+            imageInicio = R.drawable.bimbodrums;
+            imageFin = R.drawable.bimbodrums2;
+        }
+        if(instrumentoSelected.equals("Bajo")){
+            fondo.setBackgroundResource(R.drawable.bassback);
+            imageInicio = R.drawable.bimbobass;
+            imageFin = R.drawable.bimbobass2;
+        }
+
+
+    }
 
 
 

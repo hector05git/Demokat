@@ -1,7 +1,5 @@
 package com.example.demokat.controllers;
 
-import static com.example.demokat.controllers.MainMenu.instrumento;
-
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,9 +19,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.demokat.R;
 import com.example.demokat.adapters.AdapterPersonalizado2;
-import com.example.demokat.database.UsuarioDAO;
-
-import java.util.List;
+import com.example.demokat.database.DAO;
 
 public class CancioneroMenu extends AppCompatActivity {
     ListView  list_Rec;
@@ -35,14 +31,14 @@ public class CancioneroMenu extends AppCompatActivity {
         return cancion_titulo;
     }
 
-    UsuarioDAO usuarioDAO = MainActivity.getUsuarioDAO();
+    DAO usuarioDAO = MainActivity.getUsuarioDAO();
     private int user_id = MainActivity.getUser_id();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_cancionero_menu);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainRec), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -56,8 +52,75 @@ public class CancioneroMenu extends AppCompatActivity {
         searchView.setClickable(true);   // Asegura que sea clicable en toda su extensión.
         searchView.setFocusableInTouchMode(true);  // Asegura que se pueda enfocar al tocar.
         searchView.setOnClickListener(v -> searchView.onActionViewExpanded());
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
-    }
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                String[] titulos = usuarioDAO.searchTitulosCanciones(user_id, newText);
+                int[] images = new int[titulos.length];
+                for (int i = 0; i < titulos.length; i++) {
+                    images[i] = R.drawable.addtosong;
+                }
+
+                AdapterPersonalizado2 adapter2 = new AdapterPersonalizado2(CancioneroMenu.this, images, titulos);
+                list_Cancion.setAdapter(adapter2);
+                list_Cancion.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                        cancion_titulo = titulos[position];
+                        Intent intent = new Intent(CancioneroMenu.this, Canciones_Menu.class);
+                        startActivity(intent);
+
+
+                    }
+                });
+
+                list_Cancion.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                        cancion_titulo = titulos[position];
+                        AlertDialog.Builder builder = new AlertDialog.Builder(CancioneroMenu.this);
+                        builder.setTitle("¡Alerta!")
+                                .setMessage("¿Deseas eliminar esta cancion?")
+                                .setPositiveButton("Eliminar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        usuarioDAO.deleteCancion(user_id, cancion_titulo);
+                                        Toast.makeText(CancioneroMenu.this, "Canción eliminada", Toast.LENGTH_SHORT).show();
+                                        crearLista2();
+                                        searchView.clearFocus();
+                                        searchView.setQuery("", false);
+
+
+                                    }
+                                })
+                                .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+
+                                    }
+                                });
+
+                        builder.create().show();
+
+                        return true;
+                    }
+                });
+                return false;
+            }});}
+
+
+
+
+
+
+
 
 
     public void nuevaCancion(View view){
@@ -112,7 +175,7 @@ public class CancioneroMenu extends AppCompatActivity {
         int [] images = new int[titulos.length];
 
         for (int i = 0; i < titulos.length; i++) {
-            images[i] = R.drawable.dino_click;
+            images[i] = R.drawable.addtosong;
         }
 
         AdapterPersonalizado2 adapter2 = new AdapterPersonalizado2(this, images, titulos);
@@ -159,6 +222,11 @@ public class CancioneroMenu extends AppCompatActivity {
                 return true;
             } });
     }
-
+    public void onResume(){
+        super.onResume();
+        crearLista2();
+        searchView.clearFocus();//ESTO ES PARA QUE EL TECLADO NO APAREZCA AUTOMATICAMENTE AL VOLVER
+        searchView.setQuery("",false);
+    }
 
 }

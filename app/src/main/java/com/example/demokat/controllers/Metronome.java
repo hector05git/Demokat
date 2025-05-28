@@ -26,7 +26,7 @@ public class Metronome extends AppCompatActivity {
     int milisec = 1000;
     private int click;
     TextView bpm;
-    private ImageView mas, menos, encender;
+    private ImageView mas, menos;
     private SeekBar seekbar;
 
     @Override
@@ -34,7 +34,7 @@ public class Metronome extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_metronome);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainRec), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -42,9 +42,7 @@ public class Metronome extends AppCompatActivity {
 
         bimboGuitar = findViewById(R.id.bimboguitar);
         bpm = findViewById(R.id.bpm2);
-        mas = findViewById(R.id.mas);
-        menos = findViewById(R.id.menos);
-        encender = findViewById(R.id.encender);
+
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
         click = soundPool.load(this, R.raw.click, 1);
         bpm.setText(String.valueOf(bpms));
@@ -56,7 +54,7 @@ public class Metronome extends AppCompatActivity {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 bpms = progress;
-                recalcularIntervalo();
+                recalcular();
                 bpm.setText(String.valueOf(bpms));
             }
 
@@ -82,12 +80,12 @@ public class Metronome extends AppCompatActivity {
             while (on) {
                 try {
 
-                    runOnUiThread(() -> bimboGuitar.setImageResource(R.drawable.dino_click));
+                    runOnUiThread(() -> bimboGuitar.setImageResource(R.drawable.bimbometro1));
                     soundPool.play(click, 1, 1, 1, 0, 1);
 
                     Thread.sleep(milisec);
 
-                    runOnUiThread(() -> bimboGuitar.setImageResource(R.drawable.dino_normal));
+                    runOnUiThread(() -> bimboGuitar.setImageResource(R.drawable.bimbometro2));
                     soundPool.play(click, 1, 1, 1, 0, 1);
                     Thread.sleep(milisec);
 
@@ -108,14 +106,14 @@ public class Metronome extends AppCompatActivity {
         }
       else if(on){
             on = false;
-            encender.setEnabled(true);
             if (animar != null && animar.isAlive()) {
                 animar.interrupt();
+                bimboGuitar.setImageResource(R.drawable.bimbometro);
             }
         }
     }
 
-    private void recalcularIntervalo() {
+    private void recalcular() {
         milisec = 60000 / bpms;
     }
 
@@ -123,7 +121,7 @@ public class Metronome extends AppCompatActivity {
         if (bpms > 5) {
             bpms -= 5;
             seekbar.setProgress(seekbar.getProgress()-5);
-            recalcularIntervalo();
+            recalcular();
             bpm.setText(String.valueOf(bpms));
         }
     }
@@ -132,7 +130,7 @@ public class Metronome extends AppCompatActivity {
         if (bpms < 300) {
             bpms += 5;
             seekbar.setProgress(seekbar.getProgress()+5);
-            recalcularIntervalo();
+            recalcular();
             bpm.setText(String.valueOf(bpms));
         }
     }
@@ -141,16 +139,16 @@ public class Metronome extends AppCompatActivity {
         if (bpms > 5) {
             bpms -= 1;
             seekbar.setProgress(seekbar.getProgress()-1);
-            recalcularIntervalo();
+            recalcular();
             bpm.setText(String.valueOf(bpms));
         }
     }
 
     public void sumar1(View view) {
         if (bpms < 300) {
-            seekbar.setProgress(seekbar.getProgress()+5);
             bpms += 1;
-            recalcularIntervalo();
+            seekbar.setProgress(seekbar.getProgress()+1);
+            recalcular();
             bpm.setText(String.valueOf(bpms));
         }
     }

@@ -27,7 +27,7 @@ public class MainMenu extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main_menu);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainRec), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -43,8 +43,8 @@ public class MainMenu extends AppCompatActivity {
 
 
     public void crearLista() {
-        int[] images = {R.drawable.dino_click, R.drawable.dino_click, R.drawable.dino_click, R.drawable.dino_click, R.drawable.dino_click};
-        String[] titulos = {"Guitarra", "Voz", "Batería", "Bajo", "Notas"};
+        int[] images = {R.drawable.guitaricon, R.drawable.drumsicon, R.drawable.vozicon, R.drawable.bassicon, R.drawable.notasicon};
+        String[] titulos = {"Guitarra", "Batería","Voz", "Bajo", "Notas"};
 
 
         AdapterPersonalizado adapter = new AdapterPersonalizado(this, images, titulos);

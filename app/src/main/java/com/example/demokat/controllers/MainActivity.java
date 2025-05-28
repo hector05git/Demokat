@@ -1,13 +1,10 @@
 package com.example.demokat.controllers;
 
 import android.content.Intent;
-import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.view.View;
-import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
@@ -17,7 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.demokat.R;
-import com.example.demokat.database.UsuarioDAO;
+import com.example.demokat.database.DAO;
 import com.example.demokat.models.UsuarioModel;
 
 import java.sql.SQLException;
@@ -27,23 +24,31 @@ public class MainActivity extends AppCompatActivity {
     private EditText con;
     private UsuarioModel usuarioModel;
     public static int user_id;
+    Thread animar;
+    boolean on = false;
+    ImageView bimboPlay;
+    int imageFin = R.drawable.bimbometro2;
+    int imageInicio = R.drawable.bimbometro1;
+
 
     public static int getUser_id() {
         return user_id;
     }
 
-    public static UsuarioDAO usuarioDAO;
-    public static UsuarioDAO getUsuarioDAO() {
+    public static DAO usuarioDAO;
+    public static DAO getUsuarioDAO() {
         return usuarioDAO;
     }
 
     static {
         try {
-            usuarioDAO = new UsuarioDAO();
+            usuarioDAO = new DAO();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
     }
+
+
 
 
 
@@ -53,15 +58,41 @@ public class MainActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainRec), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
         usu = findViewById(R.id.usu_et);
         con = findViewById(R.id.con_et);
+        bimboPlay = findViewById(R.id.bimboPlayMain);
+        on = true;
+        startAnim();
+
 
     }
+
+
+
+    private void startAnim() {
+        if (animar != null && animar.isAlive()) {
+            animar.interrupt();
+        }
+        animar = new Thread(() -> {
+            while (on) {
+                try {
+                    runOnUiThread(() -> bimboPlay.setImageResource(imageFin));
+                    Thread.sleep(1000);
+                    runOnUiThread(() -> bimboPlay.setImageResource(imageInicio));
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    return;
+                }
+            }
+        });
+        animar.start();
+    }
+
     public void goToMenu(View view) {
         String usuario = String.valueOf(usu.getText()).trim();
         String contrasena = String.valueOf(con.getText()).trim();
@@ -81,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
         if (usuarioModel1.getUser() == "errordb") {
 
             try {
-                usuarioDAO = new UsuarioDAO();
+                usuarioDAO = new DAO();
                 usu.setText("");
                 con.setText("");
             } catch (SQLException e) {
@@ -98,6 +129,7 @@ public class MainActivity extends AppCompatActivity {
             user_id = usuarioModel1.getId();
             Toast.makeText(this,   usuarioModel1.getUser() + " logeado", Toast.LENGTH_SHORT).show();
             usuarioModel = null;
+            animar.interrupt();
             Intent intent = new Intent(this, ButtonsMenu.class);
             startActivity(intent);
 
@@ -106,7 +138,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public void goToRegister(View view) {
+        animar.interrupt();
+        Intent intent = new Intent(MainActivity.this, Register.class);
+        startActivity(intent);
 
+
+    }
+public void onResume(){
+    usu.setText("");
+    con.setText("");
+    startAnim();
+
+    super.onResume();
+}
 
 
 }

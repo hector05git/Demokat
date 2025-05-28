@@ -22,7 +22,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.demokat.R;
 import com.example.demokat.adapters.AdapterPersonalizado2;
-import com.example.demokat.database.UsuarioDAO;
+import com.example.demokat.database.DAO;
 
 import java.io.File;
 import java.sql.Timestamp;
@@ -31,9 +31,9 @@ public class InstrumentMenu extends AppCompatActivity {
     private ListView listView;
     private String instrumento = MainMenu.getInstrumento();
     private TextView instrument;
-    private ConstraintLayout rootLayout;
+    private ConstraintLayout fondo;
     private ImageView recBtn;
-    UsuarioDAO usuarioDAO = MainActivity.getUsuarioDAO();
+    DAO usuarioDAO = MainActivity.getUsuarioDAO();
     private int user_id = MainActivity.getUser_id();
     public static String title;
     public static String notaMode;
@@ -43,24 +43,18 @@ public class InstrumentMenu extends AppCompatActivity {
         return notaMode;
     }
 
-    public static void setNotaMode(String notaMode) {
-        notaMode = notaMode;
-    }
 
     public static String getTitle2() {
         return title;
     }
 
-    public static void setTitle2(String title) {
-        InstrumentMenu.title = title;
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_instrument_menu);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainRec), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -68,8 +62,9 @@ public class InstrumentMenu extends AppCompatActivity {
         instrument = findViewById(R.id.instrument_tv);
         listView = findViewById(R.id.listRec);
         recBtn = findViewById(R.id.rec_btn);
+
         instrument.setText(instrumento);
-        rootLayout = findViewById(R.id.main);
+        fondo = findViewById(R.id.mainRec);
         searchView = findViewById(R.id.search_id);
         searchView.setIconified(false);  // Deshabilita el comportamiento de "iconificación" de la lupa.
         searchView.setFocusable(true);   // Asegura que pueda recibir foco.
@@ -100,7 +95,7 @@ public class InstrumentMenu extends AppCompatActivity {
                     int [] images = new int[titulos.length];
 
                     for (int i = 0; i < titulos.length; i++) {
-                        images[i] = R.drawable.dino_click;
+                        images[i] = R.drawable.startnotas;
                     }
                     AdapterPersonalizado2 adapter = new AdapterPersonalizado2(InstrumentMenu.this, images, titulos);
                     listView.setAdapter(adapter);
@@ -154,7 +149,7 @@ public class InstrumentMenu extends AppCompatActivity {
                     int [] images = new int[titulos.length];
 
                     for (int i = 0; i < titulos.length; i++) {
-                        images[i] = R.drawable.dino_click;
+                        images[i] = R.drawable.startplay;
                     }
                     AdapterPersonalizado2 adapter = new AdapterPersonalizado2(InstrumentMenu.this, images, titulos);
                     listView.setAdapter(adapter);
@@ -238,22 +233,21 @@ public class InstrumentMenu extends AppCompatActivity {
 
     public void loadInstrument(){
         if(instrumento.equals("Guitarra")){
-            rootLayout.setBackgroundResource(R.drawable.dino_click);
+            fondo.setBackgroundResource(R.drawable.guitarback);
         }
         if(instrumento.equals("Voz")){
-            //rootLayout.setBackgroundResource(R.drawable.dino_click);
+            fondo.setBackgroundResource(R.drawable.vozback);
         }
         if(instrumento.equals("Batería")){
-//            rootLayout.setBackgroundResource(R.drawable.dino_click);
+            fondo.setBackgroundResource(R.drawable.drumback);
         }
         if(instrumento.equals("Bajo")){
-//            rootLayout.setBackgroundResource(R.drawable.dino_click);
-        }
-        if(instrumento.equals("Metrónomo")){
-//            rootLayout.setBackgroundResource(R.drawable.dino_click);
+            fondo.setBackgroundResource(R.drawable.bassback);
         }
         if(instrumento.equals("Notas")){
-//            rootLayout.setBackgroundResource(R.drawable.dino_click);
+            fondo.setBackgroundResource(R.drawable.notasback);
+            recBtn.setImageResource(R.drawable.newnota);
+
 
 
         }
@@ -276,7 +270,11 @@ public class InstrumentMenu extends AppCompatActivity {
         int [] images = new int[titulos.length];
 
         for (int i = 0; i < titulos.length; i++) {
-            images[i] = R.drawable.dino_click;
+            if(instrumento=="Notas"){
+                images[i] = R.drawable.startnotas;
+            } else  {
+                images[i] = R.drawable.startplay;
+            }
         }
 
         AdapterPersonalizado2 adapter = new AdapterPersonalizado2(this, images, titulos);

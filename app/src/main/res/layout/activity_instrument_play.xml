@@ -2,31 +2,34 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/main"
+    android:id="@+id/mainRec"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".controllers.InstrumentPlay">
 
     <ImageView
+        android:id="@+id/imageView9"
+        android:layout_width="369dp"
+        android:layout_height="785dp"
+        android:layout_marginTop="20dp"
+        android:elevation="-10dp"
+        android:scaleType="fitXY"
+        android:translationZ="-10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/black" />
+
+    <ImageView
         android:id="@+id/addCancion"
         android:layout_width="73dp"
         android:layout_height="84dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="10dp"
         android:onClick="addToSong"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dino_click" />
-
-    <TextView
-        android:id="@+id/textView11"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="112dp"
-        android:layout_marginEnd="8dp"
-        android:text="Añadir a canción"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/addtosong" />
 
     <EditText
         android:id="@+id/titulo_tv"
@@ -34,8 +37,11 @@
         android:layout_height="70dp"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="200dp"
+        android:backgroundTint="@color/white"
+        android:fontFamily="@font/adlam_display"
         android:gravity="center"
         android:text="Titulo"
+        android:textColor="@color/white"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -45,8 +51,8 @@
         android:layout_width="270dp"
         android:layout_height="289dp"
         android:layout_marginTop="200dp"
-        android:layout_marginEnd="68dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/dino_normal" />
 
@@ -59,27 +65,7 @@
         android:onClick="empezar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dino_click" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="708dp"
-        android:layout_marginEnd="324dp"
-        android:text="Loop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="708dp"
-        android:layout_marginEnd="64dp"
-        android:text="End"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/startplay" />
 
     <ImageView
         android:id="@+id/imageView4"
@@ -90,7 +76,7 @@
         android:onClick="finalizar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dino_click" />
+        app:srcCompat="@drawable/endplay" />
 
     <ImageView
         android:id="@+id/btn_loop"
@@ -101,16 +87,6 @@
         android:onClick="loop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/dino_click" />
-
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="720dp"
-        android:layout_marginEnd="172dp"
-        android:text="Start/Stop"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:srcCompat="@drawable/loopoff" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,8 +10,6 @@ import android.media.AudioManager;
 import android.media.MediaRecorder;
 import android.media.SoundPool;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -21,21 +19,19 @@ import android.widget.Toast;
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 import com.example.demokat.R;
-import com.example.demokat.database.UsuarioDAO;
+import com.example.demokat.database.DAO;
 import com.example.demokat.models.RecModel;
 
 import java.io.IOException;
 import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
 
 public class InstrumentRec extends AppCompatActivity {
     private ImageView bimboPlay;
@@ -43,14 +39,14 @@ public class InstrumentRec extends AppCompatActivity {
     Thread animar;
     private MediaRecorder mediaRecorder;
     private String outputFilePath;
-    int imageInicio = R.drawable.dino_normal;
-    int imageFin = R.drawable.dino_click;
+    int imageInicio = R.drawable.bimborec;
+    int imageFin = R.drawable.bimborec2;
     ImageView play_btn;
     private String mode = "start";
-    UsuarioDAO usuarioDAO = MainActivity.getUsuarioDAO();
+    DAO usuarioDAO = MainActivity.getUsuarioDAO();
+    private ConstraintLayout fondo;
 
-
-    public ImageView bimboGuitar;
+    public ImageView bimboMetro;
     boolean onM = false;
     Thread animarM;
     private SoundPool soundPool;
@@ -68,7 +64,7 @@ public class InstrumentRec extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_instrument_rec);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.mainRec), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
@@ -77,13 +73,12 @@ public class InstrumentRec extends AppCompatActivity {
 
         play_btn = findViewById(R.id.play_btn2);
         bimboPlay = findViewById(R.id.bimbo_play2);
-
-
-        bimboGuitar = findViewById(R.id.bimboMetro);
+        bimboPlay.setImageResource(imageInicio);
+        fondo = findViewById(R.id.mainRec);
+        bimboMetro = findViewById(R.id.bimboMetro);
         bpm = findViewById(R.id.bpm2);
-        mas = findViewById(R.id.mas2);
-        menos = findViewById(R.id.menos2);
         soundPool = new SoundPool(1, AudioManager.STREAM_MUSIC, 1);
+        loadInstrument();
 
         AudioAttributes audioAttributes = new AudioAttributes.Builder()
                 .setUsage(AudioAttributes.USAGE_GAME)
@@ -108,12 +103,12 @@ public class InstrumentRec extends AppCompatActivity {
             while (onM) {
                 try {
 
-                    runOnUiThread(() -> bimboGuitar.setImageResource(R.drawable.dino_click));
+                    runOnUiThread(() -> bimboMetro.setImageResource(R.drawable.bimbometro1));
                     soundPool.play(click, 1, 1, 1, 0, 1);
 
                     Thread.sleep(milisec);
 
-                    runOnUiThread(() -> bimboGuitar.setImageResource(R.drawable.dino_normal));
+                    runOnUiThread(() -> bimboMetro.setImageResource(R.drawable.bimbometro2));
                     soundPool.play(click, 1, 1, 1, 0, 1);
                     Thread.sleep(milisec);
 
@@ -137,6 +132,7 @@ public class InstrumentRec extends AppCompatActivity {
             onM = false;
             if (animarM != null && animarM.isAlive()) {
                 animarM.interrupt();
+                bimboMetro.setImageResource(R.drawable.bimbometro);
             }
         }
     }
@@ -232,7 +228,7 @@ public class InstrumentRec extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            play_btn.setImageResource(imageInicio);
+            play_btn.setImageResource(R.drawable.pauserec);
             mode = "pause";
 
         } else if (on && mode.equals("pause")) {
@@ -240,13 +236,13 @@ public class InstrumentRec extends AppCompatActivity {
 
             animar.interrupt();
             mode = "restart";
-            play_btn.setImageResource(imageFin);
+            play_btn.setImageResource(R.drawable.startrec);
 
         } else if (on && mode.equals("restart")) {
             mediaRecorder.resume();
 
             startAnim();
-            play_btn.setImageResource(R.drawable.dino_normal);
+            play_btn.setImageResource(R.drawable.pauserec);
             bimboPlay.setImageResource(imageInicio);
             mode = "pause";
             on = true;
@@ -256,13 +252,13 @@ public class InstrumentRec extends AppCompatActivity {
 
     public void showInputDialog(View view) {
 
-        EditText inputTitulo = null;
         if (on) {
+            EditText inputTitulo = null;
             try {
                 mediaRecorder.pause();
                 animar.interrupt();
                 mode = "restart";
-                play_btn.setImageResource(imageFin);
+                play_btn.setImageResource(R.drawable.startrec);
 
 
             } catch (IllegalStateException e) {
@@ -272,7 +268,7 @@ public class InstrumentRec extends AppCompatActivity {
 
             inputTitulo = new EditText(this);
 
-        }
+
 
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
@@ -292,7 +288,7 @@ public class InstrumentRec extends AppCompatActivity {
                             } else {
                                 mediaRecorder.release();
                                 mediaRecorder = null;
-                                Toast.makeText(InstrumentRec.this, "Texto ingresado: " + userInput, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(InstrumentRec.this, "Audio guardado  " + userInput, Toast.LENGTH_SHORT).show();
 
                                 finalizar(userInput);
                             }
@@ -312,6 +308,9 @@ public class InstrumentRec extends AppCompatActivity {
                     }
                 });
         builder.create().show();
+        }else {
+            Toast.makeText(InstrumentRec.this, "Primero debes empezar a grabar", Toast.LENGTH_SHORT).show();
+        }
     }
 
 
@@ -331,10 +330,31 @@ public class InstrumentRec extends AppCompatActivity {
 
             bimboPlay.setImageResource(imageInicio);
             mode = "start";
-            play_btn.setImageResource(imageFin);
+            play_btn.setImageResource(R.drawable.startrec);
             finish();
 
     }
+
+
+    public void loadInstrument(){
+        if(instrumento.equals("Guitarra")){
+            fondo.setBackgroundResource(R.drawable.guitarback);
+        }
+        if(instrumento.equals("Voz")){
+            fondo.setBackgroundResource(R.drawable.vozback);
+        }
+        if(instrumento.equals("Batería")){
+            fondo.setBackgroundResource(R.drawable.drumback);
+        }
+        if(instrumento.equals("Bajo")){
+            fondo.setBackgroundResource(R.drawable.bassback);
+        }
+
+
+    }
+
+
+
 
     public void onPause(){
         super.onPause();
