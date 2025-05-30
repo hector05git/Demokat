@@ -29,7 +29,7 @@
     <string name="detener_error">Error al detener la grabación</string>
     <string name="titulo_rec">Escriba un titulo para su grabación</string>
     <string name="titulo">Titulo</string>
-    <string name="primero_grabar">primero debes empezar a grabar</string>
+    <string name="primero_grabar">Primero debes empezar a grabar</string>
     <string name="escriba_usuario">Usuario</string>
     <string name="escriba_nombre">Nombre</string>
     <string name="escriba_apellido">Apellido</string>
