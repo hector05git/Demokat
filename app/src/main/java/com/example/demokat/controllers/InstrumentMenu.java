@@ -66,10 +66,10 @@ public class InstrumentMenu extends AppCompatActivity {
         instrument.setText(instrumento);
         fondo = findViewById(R.id.mainRec);
         searchView = findViewById(R.id.search_id);
-        searchView.setIconified(false);  // Deshabilita el comportamiento de "iconificación" de la lupa.
-        searchView.setFocusable(true);   // Asegura que pueda recibir foco.
-        searchView.setClickable(true);   // Asegura que sea clicable en toda su extensión.
-        searchView.setFocusableInTouchMode(true);  // Asegura que se pueda enfocar al tocar.
+        searchView.setIconified(false);//TODO ESTO ES PARA QUE LA BARRA NAVEGADORA ESTÉ MÁS BONITA
+        searchView.setFocusable(true);
+        searchView.setClickable(true);
+        searchView.setFocusableInTouchMode(true);
         searchView.setOnClickListener(v -> searchView.onActionViewExpanded());
 
         crearLista();

@@ -15,7 +15,7 @@ import java.util.Properties;
 public class DatabaseManager {
     private static Connection conexion = null;
     private static final String DRIVER = "org.postgresql.Driver";
-    //private static final String URL = "jdbc:postgresql://10.0.2.2/demokat";
+    //private static final String URL = "jdbc:postgresql://10.0.2.2/demokat"; //UTILIZAR ESTA IP PARA PROBAR EN EL EMULADOR
 
 
     private static final String URL = "jdbc:postgresql://192.168.1.136:5432/demokat";

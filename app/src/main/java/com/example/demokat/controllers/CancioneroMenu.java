@@ -47,10 +47,9 @@ public class CancioneroMenu extends AppCompatActivity {
         list_Cancion = findViewById(R.id.listCanciones);
         crearLista2();
         searchView = findViewById(R.id.search_id);
-        searchView.setIconified(false);  // Deshabilita el comportamiento de "iconificación" de la lupa.
-        searchView.setFocusable(true);   // Asegura que pueda recibir foco.
-        searchView.setClickable(true);   // Asegura que sea clicable en toda su extensión.
-        searchView.setFocusableInTouchMode(true);  // Asegura que se pueda enfocar al tocar.
+        searchView.setIconified(false);  //TODO ESTO ES PARA QUE LA BARRA NAVEGADORA ESTÉ MÁS BONITA
+        searchView.setClickable(true);
+        searchView.setFocusableInTouchMode(true);
         searchView.setOnClickListener(v -> searchView.onActionViewExpanded());
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
@@ -158,11 +157,11 @@ public class CancioneroMenu extends AppCompatActivity {
                 .setNegativeButton(getString(R.string.cancelar), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss(); // Simplemente cerrar el diálogo
+                        dialog.dismiss();
                     }
                 });
 
-        // Mostrar el AlertDialog
+
         builder.create().show();
 
     }
